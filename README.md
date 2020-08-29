@@ -1,0 +1,1 @@
+# Cool graphQL authentication API

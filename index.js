@@ -1,0 +1,15 @@
+const express=require("express")
+const app=express()
+const {ApolloServer} = require("apollo-server-express")
+const typeDefs = require("./typeDefs")
+const mongoose=require("mongoose")
+const resolvers=require("./resolvers")
+const cors=require("cors")
+const server=new ApolloServer({resolvers, typeDefs, playground:false})
+mongoose.set('useCreateIndex', true);
+server.applyMiddleware({app})
+app.use(cors())
+const port=process.env.PORT | 8080
+mongoose.connect(require("./config.json").secret, {useUnifiedTopology:true, useNewUrlParser:true})
+.then(() => app.listen(port, () => console.log(port)))
+.catch(() => console.log("err"))
